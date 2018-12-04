@@ -2,6 +2,8 @@ package banking.ads;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 
 //@ServletComponentScan
 @SpringBootApplication
@@ -11,18 +13,13 @@ public class bankingMonolithicSboot {
 		SpringApplication.run(bankingMonolithicSboot.class, args);
 	}
 	
-	/*@Bean
-	public FilterRegistrationBean corsFilter() {
-		final CorsConfiguration config = new CorsConfiguration();
-	    config.setAllowCredentials(true);
-	    config.addAllowedOrigin("*");
-	    config.addAllowedHeader("*");
-	    config.addAllowedMethod("*");
-	    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-	    source.registerCorsConfiguration("/**", config);
-	    final FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-	    bean.setOrder(0);
-		return bean;
-	}*/
+	@Bean
+	public FilterRegistrationBean getFilter() {
+		final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+	    registrationBean.setFilter(new JwtFilter());
+	    registrationBean.addUrlPatterns("/secure/*");
+
+	    return registrationBean;
+	}
 	
 }
