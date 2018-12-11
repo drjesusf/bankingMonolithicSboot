@@ -10,7 +10,7 @@
         <property name="number" column="number" />
         <property name="balance" column="balance" />
         <property name="isLocked" column="locked" />
-       <!--  <many-to-one name="customer" class="banking.ads.domain.customers.entities.Customer" column="customer_id" not-null="true"/>
-       --> 
+       <many-to-one name="customer" class="banking.ads.domain.customers.entities.Customer" column="customer_id" not-null="true"/>
+       
     </class> 
 </hibernate-mapping>

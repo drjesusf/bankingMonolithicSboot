@@ -10,9 +10,9 @@
         <property name="userName" column="user_name"/>
         <property name="password" column="password"/>
         
-        <!--  <set name="claims" inverse="true" cascade="all" lazy="false">
+          <set name="claims" inverse="true" cascade="all" lazy="false">
             <key column="user_id" not-null="true"/>
             <one-to-many class="banking.ads.security.UserClaim"/>
-        </set> -->
+        </set> 
     </class> 
 </hibernate-mapping>

@@ -1,6 +1,7 @@
 package banking.ads.security;
 
 import java.util.List;
+import java.util.Set;
 
 /*import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;*/
 import javax.validation.constraints.Size;
+
 
 //@Entity
 public class User {
@@ -30,6 +32,8 @@ public class User {
 
   //@ElementCollection(fetch = FetchType.EAGER)
   List<Role> roles;
+  
+  private Set<UserClaim> claims;
 
   public Integer getId() {
     return id;
@@ -69,6 +73,14 @@ public String getUserName() {
 
 public void setUserName(String userName) {
 	this.userName = userName;
+}
+
+public Set<UserClaim> getClaims() {
+	return claims;
+}
+
+public void setClaims(Set<UserClaim> claims) {
+	this.claims = claims;
 }
 
 }
