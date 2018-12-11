@@ -6,6 +6,7 @@ import seedWork.Entity;
 import seedWork.Notification;
 
 public class Account extends Entity{
+	private long id;
 	private String number;
 	private double balance;
 	private boolean locked;
@@ -81,5 +82,11 @@ public class Account extends Entity{
 	}
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
 	}
 }
