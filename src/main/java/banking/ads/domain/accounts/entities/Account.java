@@ -9,14 +9,14 @@ public class Account extends Entity{
 	private long id;
 	private String number;
 	private double balance;
-	private boolean locked;
+	private boolean isLocked;
 	private Customer customer;
 	
 	public void Lock() {
-		if(!locked) locked = true;
+		if(!isLocked) isLocked = true;
 	}
 	public void UnLock() {
-		if(locked) locked = false;
+		if(isLocked) isLocked = false;
 	}
 	public boolean hasIdentity() {
 		if(number == null) return false;
@@ -34,14 +34,14 @@ public class Account extends Entity{
 		Notification notification = new Notification();
 		if(amount<=0) notification.addError(AccountConstants.amountMustBeGreaterThanZero);
 		if(!hasIdentity()) notification.addError(AccountConstants.accountHasNoIdentity);
-		if(locked) notification.addError(AccountConstants.accountIsLocked);
+		if(isLocked) notification.addError(AccountConstants.accountIsLocked);
 		if(!canBeWithdrawed(amount)) notification.addError(AccountConstants.cannotWithdrawAmountIsGreaterThanBalance);
 		
 		return notification;
 	}
 	
 	private boolean canBeWithdrawed(double amount) {
-		return !locked && balance>= amount;
+		return !isLocked && balance>= amount;
 	}
 	
 	public void depositMoney(double amount) { 
@@ -54,7 +54,7 @@ public class Account extends Entity{
 		Notification notification = new Notification();
 		if(amount<=0) notification.addError(AccountConstants.amountMustBeGreaterThanZero);
 		if(!hasIdentity()) notification.addError(AccountConstants.accountHasNoIdentity);
-		if(locked) notification.addError(AccountConstants.accountIsLocked);
+		if(isLocked) notification.addError(AccountConstants.accountIsLocked);
 		
 		return notification;
 	}
@@ -71,12 +71,7 @@ public class Account extends Entity{
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
-	public boolean isLocked() {
-		return locked;
-	}
-	public void setLocked(boolean locked) {
-		this.locked = locked;
-	}
+	
 	public Customer getCustomer() {
 		return customer;
 	}
@@ -89,4 +84,17 @@ public class Account extends Entity{
 	public void setId(long id) {
 		this.id = id;
 	}
+	public boolean isLocked() {
+		return isLocked;
+	}
+	public void setLocked(boolean isLocked) {
+		this.isLocked = isLocked;
+	}
+	public boolean getIsLocked() {
+        return isLocked;
+    }
+	 public void setIsLocked(boolean isLocked) {
+	        this.isLocked = isLocked;
+	  }
+	
 }
