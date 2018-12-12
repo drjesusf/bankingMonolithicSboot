@@ -1,4 +1,4 @@
-package banking.ads.security;
+package banking.ads.domain.users.entities;
 
 import java.util.List;
 import java.util.Set;
@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;*/
 import javax.validation.constraints.Size;
+
+import banking.ads.security.Role;
 
 
 //@Entity

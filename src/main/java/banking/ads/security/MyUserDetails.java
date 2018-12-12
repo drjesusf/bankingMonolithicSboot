@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import banking.ads.domain.users.entities.User;
+
 
 @Service
 public class MyUserDetails implements UserDetailsService {

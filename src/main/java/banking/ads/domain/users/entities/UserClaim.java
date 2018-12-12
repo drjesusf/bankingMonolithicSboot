@@ -1,4 +1,4 @@
-package banking.ads.security;
+package banking.ads.domain.users.entities;
 
 public class UserClaim {
 	private long id;
