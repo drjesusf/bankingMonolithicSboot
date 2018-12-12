@@ -6,29 +6,6 @@ import banking.ads.infrastructure.hibernate.HibernateRepository;
 
 public class AccountHibernateRepository extends HibernateRepository<Account> implements IAccountRepository {
 
-	@Override
-	public Account get(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Account get(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void saveOrUpdate(Account entity) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void delete(Account entity) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public Account getByNumber(String accountNumber) {
