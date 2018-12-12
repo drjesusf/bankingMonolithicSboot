@@ -1,31 +1,46 @@
 package banking.ads.infrastructure.hibernate;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import seedWork.IRepository;
 
 public class HibernateRepository<T> implements IRepository<T> {
 
-	@Override
-	public T get(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	protected SessionFactory sessionFactory;
+
+	@Autowired
+	public void setSessionFactory(final SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
 
-	@Override
-	public T get(long id) {
-		// TODO Auto-generated method stub
-		return null;
+	protected Session getSession() {
+		return sessionFactory.getCurrentSession();
 	}
 
-	@Override
-	public void saveOrUpdate(T entity) {
-		// TODO Auto-generated method stub
-		
+	public T persist(T entity) {
+		getSession().persist(entity);
+		return entity;
+	}
+	
+	public T save(T entity) {
+		getSession().save(entity);
+		return entity;
+	}
+	
+	public T update(T entity) {
+		getSession().update(entity);
+		return entity;
 	}
 
-	@Override
-	public void delete(T entity) {
-		// TODO Auto-generated method stub
-		
+	public T merge(T entity) {
+		getSession().merge(entity);
+		return entity;
 	}
-
+	
+	public T saveOrUpdate(T entity) {
+		getSession().saveOrUpdate(entity);
+		return entity;
+	}
 }
