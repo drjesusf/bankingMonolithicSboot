@@ -93,6 +93,8 @@ public class UserApplicationService {
 		userAuthDto.setBearerToken(new UUID(0L, 0L).toString());
 		List<UserClaimDto> claims = this.getUserClaims(authUser);
 		
+		String token = jwtTokenProvider.buildJwtToken(userAuthDto);
+		userAuthDto.setBearerToken(token); 
 		//for(int i=0;i < claims.size(); i++) {System.out.println(claims.get(i).toString());};
 		userAuthDto.setClaims(claims);
 		//userAuthDto.setBearerToken(jwtTokenProvider.createToken(userAuthDto, ));

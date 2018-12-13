@@ -33,7 +33,7 @@ public class UserController {
 	@Autowired
 	ResponseHandler responseHandler;
 	
-	@RequestMapping(method = RequestMethod.POST, path = "/login", consumes = "application/json; charset=UTF-8", produces = "application/json; charset=UTF-8")
+	@RequestMapping(method = RequestMethod.POST, path = "/signin", consumes = "application/json; charset=UTF-8", produces = "application/json; charset=UTF-8")
 	public ResponseEntity<Object> login(@RequestBody UserDto requestLoginUserDto) throws Exception {
 		try {
 			UserAuthDto userAuthDto = userApplicationService.validateUser(requestLoginUserDto);
@@ -51,6 +51,20 @@ public class UserController {
 	}
 	@RequestMapping(method = RequestMethod.POST, path = "/signup", consumes = "application/json; charset=UTF-8", produces = "application/json; charset=UTF-8")
 	public ResponseEntity<Object> singup(@RequestBody UserDto requestSignupUserDto) throws Exception {
+		try {
+			UserDto newUserDto = userApplicationService.create(requestSignupUserDto);
+			return new ResponseEntity<Object>(newUserDto, HttpStatus.OK);
+			
+		} catch(IllegalArgumentException ex) {
+			return this.responseHandler.getAppCustomErrorResponse(ex.getMessage());
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			return this.responseHandler.getAppExceptionResponse();
+		}
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, path = "/create", consumes = "application/json; charset=UTF-8", produces = "application/json; charset=UTF-8")
+	public ResponseEntity<Object> create(@RequestBody UserDto requestSignupUserDto) throws Exception {
 		try {
 			UserDto newUserDto = userApplicationService.create(requestSignupUserDto);
 			return new ResponseEntity<Object>(newUserDto, HttpStatus.OK);

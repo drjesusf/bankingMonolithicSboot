@@ -1,6 +1,7 @@
 package banking.ads.application.users.dtos;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,6 +24,7 @@ public class UserDtoDeserializer extends JsonDeserializer<UserDto> {
 	            JsonNode node = objectCodec.readTree(jsonParser);
 	            String name = node.get("name").asText();
 	            String password = node.get("password").asText();
+	            List<UserClaimDto> claims = (List<UserClaimDto>) node.get("claims").elements();
 	            userDto = new UserDto(name, password);
 	    	} catch(Exception ex) {
 	    		userDto = new UserDto(RequestBodyType.INVALID.toString(), RequestBodyType.INVALID.toString());

@@ -4,6 +4,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -18,7 +19,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import banking.ads.application.users.dtos.UserAuthDto;
+import banking.ads.application.users.dtos.UserClaimDto;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -36,7 +40,10 @@ public class JwtTokenProvider {
 
   @Value("${security.jwt.token.expire-length:3600000}")
   private long validityInMilliseconds = 3600000; // 1h
-
+  
+  @Value("${security.jwt.token.expires-minutes}")
+  private long minutesToExpiration;
+  
   @Autowired
   private MyUserDetails myUserDetails;
 
@@ -60,7 +67,25 @@ public class JwtTokenProvider {
         .signWith(SignatureAlgorithm.HS256, secretKey)//
         .compact();
   }
-
+  
+  public String buildJwtToken(UserAuthDto userAuthDto) {
+		Date now = new Date();
+		Date validity = new Date(now.getTime() + (minutesToExpiration * 60 * 1000));
+		JwtBuilder jwtBuilder = Jwts.builder();
+		jwtBuilder
+			.setSubject(userAuthDto.getName())
+			.setId(UUID.randomUUID().toString())
+			.claim("isAuthenticated", userAuthDto.isAuthenticated());
+		for (UserClaimDto userClaimDto : userAuthDto.getClaims()) {
+			jwtBuilder.claim(userClaimDto.getType(), userClaimDto.getValue());
+		}
+		return jwtBuilder
+				.setIssuedAt(now)
+				.setExpiration(validity)
+				.signWith(SignatureAlgorithm.HS256, this.secretKey)
+				.compact();
+  }
+  
   public Authentication getAuthentication(String token) {
     UserDetails userDetails = myUserDetails.loadUserByUsername(getUsername(token));
     return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
