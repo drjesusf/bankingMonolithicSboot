@@ -20,7 +20,7 @@ public class User {
   private long id;
   private String userName;
   private String password;
-  List<Role> roles;
+  private List<Role> roles;
   private Set<UserClaim> claims;
 
   public long getId() {

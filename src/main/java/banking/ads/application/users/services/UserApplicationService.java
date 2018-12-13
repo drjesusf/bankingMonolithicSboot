@@ -38,7 +38,7 @@ public class UserApplicationService {
 	
 	public UserDto create(UserDto userDto) throws Exception{
 		Notification notification = this.createValidation(userDto);
-        if (notification.hasErrors()) {
+		if (notification.hasErrors()) {
             throw new IllegalArgumentException(notification.errorMessage());
         }
 		//String hashPassword = Hashing.hash(userDto.getPassword());

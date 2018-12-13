@@ -17,18 +17,18 @@ import banking.ads.domain.users.contracts.IUserRepository;
 @Repository
 public class UserHibernateRepository extends HibernateRepository<User> implements IUserRepository {
 
-	public User getById(long userId) {
+	public User getByName(String name) {
 		User user = null;
 		Criteria criteria = getSession().createCriteria(User.class, "u");
 		criteria.createAlias("u.claims", "c", JoinType.LEFT_OUTER_JOIN);
-		criteria.add(Restrictions.eq("u.id", userId));
+		criteria.add(Restrictions.eq("u.userName", name));
 		user = (User) criteria.uniqueResult();
-		return user;
+		return user; 
 	}
 	
-	public User getByName(String name) {
+	public User getById(long userId) {
 		User user = null;
-		user = getSession().get(User.class, name);
+		user = getSession().get(User.class, userId);
 		return user;
 	}
 	
