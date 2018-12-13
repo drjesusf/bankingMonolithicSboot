@@ -9,7 +9,7 @@ public class UserRepository {
 
 	public User findByUsername(String username) {
 		User user = new User();
-		user.setEmail("drjesusf@gmail.com");
+		//user.setEmail("drjesusf@gmail.com");
 		user.setPassword("123456");
 		List<Role> roles = new ArrayList<Role>();
 		roles.add(Role.ROLE_ADMIN);

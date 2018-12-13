@@ -15,45 +15,23 @@ import javax.validation.constraints.Size;
 import banking.ads.security.Role;
 
 
-//@Entity
 public class User {
 
-  //@Id
-  //@GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
-
-  //@Size(min = 4, max = 255, message = "Minimum username length: 4 characters")
-  //@Column(unique = true, nullable = false)
+  private long id;
   private String userName;
-
-  //@Column(unique = true, nullable = false)
-  private String email;
-
-  //@Size(min = 8, message = "Minimum password length: 8 characters")
   private String password;
-
-  //@ElementCollection(fetch = FetchType.EAGER)
   List<Role> roles;
-  
   private Set<UserClaim> claims;
 
-  public Integer getId() {
+  public long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(long id) {
     this.id = id;
   }
 
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getPassword() {
+   public String getPassword() {
     return password;
   }
 

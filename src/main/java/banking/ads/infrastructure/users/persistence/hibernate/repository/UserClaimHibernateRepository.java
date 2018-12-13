@@ -17,7 +17,7 @@ import banking.ads.infrastructure.hibernate.HibernateRepository;
 public class UserClaimHibernateRepository extends HibernateRepository<UserClaim> implements IUserClaimRepository{
 
 	@Override
-	public List<UserClaim> findByUserId(Integer userId) throws Exception {
+	public List<UserClaim> findByUserId(Long userId) throws Exception {
 		List<UserClaim> userClaims = null;
 		Criteria criteria = getSession().createCriteria(UserClaim.class, "uc");
 		criteria.createAlias("uc.user", "u");
