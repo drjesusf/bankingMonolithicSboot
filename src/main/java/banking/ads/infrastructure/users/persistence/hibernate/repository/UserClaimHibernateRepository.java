@@ -11,17 +11,14 @@ import banking.ads.domain.users.contracts.IUserClaimRepository;
 import banking.ads.domain.users.entities.UserClaim;
 import banking.ads.infrastructure.hibernate.HibernateRepository;
 
-
 @Transactional
 @Repository
 public class UserClaimHibernateRepository extends HibernateRepository<UserClaim> implements IUserClaimRepository{
-
-	@Override
+	@SuppressWarnings("unchecked")
 	public List<UserClaim> findByUserId(Long userId) throws Exception {
 		List<UserClaim> userClaims = null;
 		Criteria criteria = getSession().createCriteria(UserClaim.class, "uc");
 		criteria.createAlias("uc.user", "u");
-		//criteria.setFetchMode("user", FetchMode.SELECT); 
 		criteria.add(Restrictions.eq("u.id", userId));
 		userClaims = criteria.list();
 		return userClaims;
