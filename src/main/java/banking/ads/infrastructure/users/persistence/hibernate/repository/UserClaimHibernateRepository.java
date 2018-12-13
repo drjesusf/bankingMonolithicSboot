@@ -2,6 +2,8 @@ package banking.ads.infrastructure.users.persistence.hibernate.repository;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,9 +17,14 @@ import banking.ads.infrastructure.hibernate.HibernateRepository;
 public class UserClaimHibernateRepository extends HibernateRepository<UserClaim> implements IUserClaimRepository{
 
 	@Override
-	public List<UserClaim> findByUserId(Long userId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<UserClaim> findByUserId(Integer userId) throws Exception {
+		List<UserClaim> userClaims = null;
+		Criteria criteria = getSession().createCriteria(UserClaim.class, "uc");
+		criteria.createAlias("uc.user", "u");
+		//criteria.setFetchMode("user", FetchMode.SELECT); 
+		criteria.add(Restrictions.eq("u.id", userId));
+		userClaims = criteria.list();
+		return userClaims;
 	}
 
 }

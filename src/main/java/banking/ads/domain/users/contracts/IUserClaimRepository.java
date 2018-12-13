@@ -8,6 +8,6 @@ import banking.ads.domain.users.entities.UserClaim;
 
 public interface IUserClaimRepository {
 	
-	public List<UserClaim> findByUserId(Long userId) throws Exception;
+	public List<UserClaim> findByUserId(Integer integer) throws Exception;
 
 }
