@@ -16,12 +16,10 @@ import banking.ads.security.Role;
 
 
 public class User {
-
-  private long id;
-  private String userName;
-  private String password;
-  private List<Role> roles;
-  private Set<UserClaim> claims;
+	private long id;
+	private String userName;
+	private String password;
+    private Set<UserClaim> claims;
 
   public long getId() {
     return id;
@@ -39,13 +37,7 @@ public class User {
     this.password = password;
   }
 
-  public List<Role> getRoles() {
-    return roles;
-  }
-
-  public void setRoles(List<Role> roles) {
-    this.roles = roles;
-  }
+  
 
 public String getUserName() {
 	return userName;

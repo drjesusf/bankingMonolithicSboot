@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import banking.ads.security.JwtTokenProvider;
@@ -14,7 +15,7 @@ import banking.ads.api.enumeration.RequestBodyType;
 import seedWork.Notification;
 import banking.ads.application.users.dtos.UserAuthDto;
 import banking.ads.application.users.dtos.UserClaimDto;
-//import banking.common.infrastructure.security.Hashing;
+import banking.ads.security.HashingProtocols;
 import banking.ads.application.users.dtos.UserDto;
 import banking.ads.domain.users.entities.User;
 import banking.ads.domain.users.entities.UserClaim;
@@ -36,13 +37,16 @@ public class UserApplicationService {
 	@Autowired
 	private JwtTokenProvider jwtTokenProvider;
 	
+	@Value("${maxPageSize}")
+	private int maxPageSize;
+	
 	public UserDto create(UserDto userDto) throws Exception{
 		Notification notification = this.createValidation(userDto);
 		if (notification.hasErrors()) {
             throw new IllegalArgumentException(notification.errorMessage());
         }
-		//String hashPassword = Hashing.hash(userDto.getPassword());
-		//userDto.setPassword(hashPassword);
+		String hashPassword = HashingProtocols.hash(userDto.getPassword());
+		userDto.setPassword(hashPassword);
 		User user = mapper.map(userDto, User.class);
 		user = userRepository.save(user);
 		userDto = mapper.map(user, UserDto.class);
@@ -69,9 +73,9 @@ public class UserApplicationService {
 			return userAuthDto;
 			
 		}		
-		//if (!Hashing.verifyHash(userDto.getPassword(), authUser.getPassword())) {
-		//	return userAuthDto;
-		//}
+		if (!HashingProtocols.verifyHash(userDto.getPassword(), authUser.getPassword())) {
+			return userAuthDto;
+		}
 		userAuthDto = this.buildUserAuthDto(authUser);
 		return userAuthDto;
 	}
@@ -88,11 +92,36 @@ public class UserApplicationService {
 		userAuthDto.setAuthenticated(true);
 		userAuthDto.setBearerToken(new UUID(0L, 0L).toString());
 		List<UserClaimDto> claims = this.getUserClaims(authUser);
+		
+		//for(int i=0;i < claims.size(); i++) {System.out.println(claims.get(i).toString());};
 		userAuthDto.setClaims(claims);
 		//userAuthDto.setBearerToken(jwtTokenProvider.createToken(userAuthDto, ));
 		return userAuthDto;
 	}
 	
-	
+	public UserDto get(long userId) {
+		ModelMapper modelMapper = new ModelMapper();
+		User user = this.userRepository.getById(userId);
+		UserDto userDto = modelMapper.map(user, UserDto.class);
+        return userDto;
+    }
+    
+    public List<UserDto> getPaginated(int page, int pageSize) {
+		Notification notification = this.getPaginatedValidation(page, pageSize);
+        if (notification.hasErrors()) {
+            throw new IllegalArgumentException(notification.errorMessage());
+        }
+		List<User> users = this.userRepository.getPaginated(page, pageSize);
+		List<UserDto> usersDto = mapper.map(users, new TypeToken<List<UserDto>>() {}.getType());
+        return usersDto;
+    }
+    
+    private Notification getPaginatedValidation(int page, int pageSize) {
+		Notification notification = new Notification();
+		if (pageSize > maxPageSize) {
+			notification.addError("Page size can not be greater than 100");
+		}
+		return notification;
+	}
 
 }

@@ -6,8 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @JsonDeserialize(using = UserDtoDeserializer.class)
 public class UserDto {
-	
-	private long id;
+		private long id;
 	private String name;
 	private String password;
 	private Set<UserClaimDto> claims;
