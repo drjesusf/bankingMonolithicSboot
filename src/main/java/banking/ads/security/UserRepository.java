@@ -14,7 +14,7 @@ public class UserRepository {
 		List<Role> roles = new ArrayList<Role>();
 		roles.add(Role.ROLE_ADMIN);
 		
-		user.setRoles(roles);
+		//user.setRoles(roles);
 		return user;
 	}
 
