@@ -2,6 +2,7 @@ package banking.ads.domain.customers.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import banking.ads.domain.accounts.entities.Account;
 import seedWork.Entity;
@@ -13,10 +14,10 @@ public class Customer extends Entity {
 	private String lastName;
 	private String identityDocument;
 	private boolean isActive;
-	private List<Account> accounts;
+	private Set<Account> accounts;
 	
 	public Customer() {
-		accounts = new ArrayList<Account>();
+		//accounts = new ArrayList<Account>();
 	}
 
 	public long getId() {
@@ -59,11 +60,11 @@ public class Customer extends Entity {
 		this.isActive = isActive;
 	}
 
-	public List<Account> getAccounts() {
+	public Set<Account> getAccounts() {
 		return accounts;
 	}
 
-	public void setAccounts(List<Account> accounts) {
+	public void setAccounts(Set<Account> accounts) {
 		this.accounts = accounts;
 	}
 	

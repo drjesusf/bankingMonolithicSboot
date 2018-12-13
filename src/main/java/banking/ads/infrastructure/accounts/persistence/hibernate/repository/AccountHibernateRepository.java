@@ -17,7 +17,8 @@ public class AccountHibernateRepository extends HibernateRepository<Account> imp
 		
 		return new Account();
 	}
-
+	
+	
 	@Override
 	public Account getByNumberWithUpgradeLock(String accountNumber) {
 		// TODO Auto-generated method stub
